@@ -20,8 +20,6 @@ cv2.imshow('Image', img)
 
 stack1=deque()
 stack2=deque()
-stack3=deque()
-stack4=deque()
 
 def check(i,j):
     if(img[i,j]==128):
