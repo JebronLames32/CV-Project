@@ -50,8 +50,6 @@ for i in range(n):
             img1[i][j][0]=255
             img1[i][j][1] = 255
             img1[i][j][2] = 255
-# cv2.namedWindow('op', cv2.WINDOW_NORMAL)
-# cv2.imshow('op', img1.astype(np.uint8))
 tr[a][b] = 200
 
 def dist(p,q,r,s):
