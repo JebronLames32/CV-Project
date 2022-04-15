@@ -25,7 +25,7 @@ while(count<4*prob):
 
 
 #resizing it to a 400*400 matrix
-img=cv2.resize(src=img,dsize=(40,40),interpolation=cv2.INTER_AREA)
+img=cv2.resize(src=img,dsize=(60,60),interpolation=cv2.INTER_AREA)
 
 #adding 2 random grey pixels to the maze
 n=0
