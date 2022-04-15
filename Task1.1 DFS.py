@@ -2,6 +2,10 @@ import numpy as np
 from collections import deque
 import cv2
 import time
+import sys
+
+sys.setrecursionlimit(1900)
+
 #finding a probability between 20 and 30 to have an obstacle
 prob=np.random.randint(20,31)  #as range is [Low,High)
 print(4*prob)
@@ -26,15 +30,15 @@ img=cv2.resize(src=img,dsize=(40,40),interpolation=cv2.INTER_AREA)
 #adding 2 random grey pixels to the maze
 n=0
 while(n<2):
-    i=np.random.randint(0,40)
-    j=np.random.randint(0,40)
+    i=np.random.randint(0,60)
+    j=np.random.randint(0,60)
     if(img[i,j]==255):    #checking for a white pixel
         n+=1
         img[i,j]=128
         print(j,i)
 m=i         #taking the second grey pixel formed to be the starting point
 n=j
-print(m,n)
+
 img[m,n]=200        #setting the starting pixel to value 200 initially to avoid it being mistaken for final pixel
 x,y=img.shape
 cv2.namedWindow('Image', cv2.WINDOW_NORMAL)
@@ -43,7 +47,6 @@ stack2=deque()              #Stack2 is used to store the y component of the pixe
 
 def dfs(i,j):
     if img[i,j]!=128:
-        while(True):
             img[i,j]=127            #setting all traversed pixels to value 127 to avoid revisiting
             stack1.append(i)        #adding the x and y components of the traversed pixels to the stack
             stack2.append(j)
@@ -76,7 +79,7 @@ def dfs(i,j):
             
             stack1.pop()                        #If we reach a dead end i.e. a pixel surrounded by no white pixel, we consider out path taken to be wrong
             stack2.pop()                        #We backtrack to the pixel which has untraversed pixels by popping the pixels that belong the wrong path until one of the if conditions is satisfied
-            break
+            
     else:
         print("complete")                       #The final pixel is reached
         l=len(stack1)                           #The length of our stack will be equal to the number of pixels in the solution path
