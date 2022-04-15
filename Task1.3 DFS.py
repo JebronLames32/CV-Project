@@ -24,17 +24,16 @@ c,d=(51,26)
 
 img[c,d]=128       
 
-print(m,n)
+print("start=",n,m)
+print("end=", d,c)
 img[m,n]=200
 x,y=img.shape
 cv2.namedWindow('Image', cv2.WINDOW_NORMAL)
 stack1=deque()
 stack2=deque()
-q=0
+
 def dfs(i,j):
-    global q
     if img[i,j]!=128:
-        while(q<1):
             img[i,j]=127
             stack1.append(i)
             stack2.append(j)
@@ -68,9 +67,7 @@ def dfs(i,j):
             stack1.pop()
             stack2.pop()
             
-            break
     else:
-        q=2
         print("complete")
         l=len(stack1)
         print("distance=", l)
@@ -87,4 +84,4 @@ begin=time.time()
 dfs(m,n)
 
 cv2.waitKey(0)
-cv2.destroyAllWindows
+cv2.destroyAllWindows()
