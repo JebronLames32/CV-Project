@@ -17,17 +17,9 @@ img[c][d] = 200
 cv2.namedWindow('Image', cv2.WINDOW_NORMAL)
 cv2.imshow('Image', img)
 
-
 stack1=deque()
 stack2=deque()
 
-def check(i,j):
-    if(img[i,j]==128):
-        print("complete")
-        dfs(i,j)
-    elif(img[i,j]==255):
-        dfs(i,j)
-        
 ct=0
 def dfs(i,j):
     global ct
