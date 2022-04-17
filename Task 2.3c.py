@@ -5,7 +5,7 @@ import time
 
 arduino = serial.Serial(port='COM4' , baudrate = 9600 , timeout = .1)
 #Arduino and Python is connected by Serial Communication
-
+f = open('directionOutputsBonus.txt', 'w') 
 def write_read(x):
     arduino.write(bytes(x, 'utf-8'))
     time.sleep(0.05)
