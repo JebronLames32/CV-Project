@@ -3,14 +3,18 @@ import numpy as np
 import math
 import time
 
-begin = time.time()
+#MAZE TRAVERSAL USING RRT ALGORITHM
+#RRT - Rapidly exploring Random Trees
+
+#firstly, we generate a random maze
+begin = time.time() #start time
 prob=np.random.randint(20,31)
 img=np.full((20,20),255).astype(np.uint8)
 count=0
 while(count<4*prob):
     i=np.random.randint(0,20)
     j=np.random.randint(0,20)
-    if(img[i,j]!=0):    #checking for repitition
+    if(img[i,j]!=0):   #checking for repitition
         count+=1
         img[i,j]=0
 
@@ -37,6 +41,7 @@ print(c,d)
 # end : c,d
 cv2.namedWindow('Image', cv2.WINDOW_NORMAL)
 cv2.imshow('Image', img)
+#Randomly generated maze displayed
 img[a][b] = 255
 img[c][d] = 255
 
@@ -44,31 +49,38 @@ c1=c
 d1=d
 tr = np.full((n,m),0)
 img1=np.full((n,m,3),0)
+#the tr matrix keeps a track of all the positions which are a part of the Randomly Generated Tree
+#if a pixel is a part of the tree, then tr value at that pixel is stored as 200, else tr value at that pixel is stored as 0
+#initially only the starting point is a part of the tree
 for i in range(n):
     for j in range(m):
         if img[i,j]==255:
             img1[i][j][0]=255
             img1[i][j][1] = 255
             img1[i][j][2] = 255
-tr[a][b] = 200
+#img1 is a matrix, which stores a copy of the original image initially, and then stores the tree as BLUE pixels and,
+#the final path over the tree is stored as RED pixels in img1 matrix
+tr[a][b] = 200 #initial point, a part of the tree
 
-def dist(p,q,r,s):
+def dist(p,q,r,s): #calculates distance between 2 points
     k1 = (p-r)*(p-r)
     k2 = (q - s) * (q - s)
     u = math.sqrt(k1+k2)
     return u
 
-def track1(l1,l2):
+def track1(l1,l2): #stores the tree pixels as BLUE
     tr[l1][l2] = 200
     img1[l1][l2][0] = 255
     img1[l1][l2][1] = 25
     img1[l1][l2][2] = 25
     cv2.imshow('tree', img1.astype(np.uint8))
+    # displaying the tree continuously
     cv2.waitKey(10)
-cv2.namedWindow('tree', cv2.WINDOW_NORMAL)
+cv2.namedWindow('tree', cv2.WINDOW_NORMAL) #window for displaying the tree and the final path over it
 while True :
     i1 = np.random.randint(0, n)
     j1 = np.random.randint(0, m)
+    # random point (i1,j1) is stored
     i2=a
     j2=b
     min = dist(i1,j1,a,b)
@@ -79,6 +91,7 @@ while True :
                     min = dist(i1, j1, i, j)
                     i2=i
                     j2=j
+        #i2,j2 stores the row and column of that pixel whose distance from the random point is minimum
         if (i2 == i1) and (j1>j2) :
             if (j2+1<m) and (img[i2][j2+1]==255) and (tr[i2][j2+1]==0):
                 track1(i2,j2+1)
@@ -120,15 +133,16 @@ while True :
                 track1(i2-1, j2 - 1)
                 if (i2 - 1 == c) and (j2 - 1 == d):
                     break
+        # once the end point (c,d) becomes a part of the tree, loop is terminated
 
-path1 = np.full((n,m),0)
+path1 = np.full((n,m),0) #stores step values for the required path as 1,2,3 .. so on
 path1[a][b] = 1
 k=1
 
 def trac(k1):
     for i in range(n):
         for j in range(m):
-            if path1[i][j]==k1 :
+            if path1[i][j]==k1 : #checks for step number k
                 if (i > 0) and (img[i - 1][j] == 255) and (tr[i - 1][j] == 200) and (path1[i-1][j]==0):
                     path1[i - 1][j] = k1+1
                 if (j > 0) and (img[i][j-1] == 255) and (tr[i][j-1] == 200) and (path1[i][j-1]==0):
@@ -145,6 +159,7 @@ def trac(k1):
                     path1[i - 1][j + 1] = k1+1
                 if (i > 0) and (j > 0) and (img[i - 1][j-1] == 255) and (tr[i - 1][j - 1] == 200) and (path1[i-1][j-1]==0):
                     path1[i - 1][j - 1] = k1+1
+                # checking all the 8 neighbours/children and if path is available , then step number increases by 1
 
 while True:
     trac(k)
@@ -155,13 +170,15 @@ p=path1[c][d]
 img1[c][d][0] = 10
 img1[c][d][1] = 10
 img1[c][d][2] = 255
-def track(c3,d3):
+#starting point made red
+def track(c3,d3): #makes the path over the tree as RED
     tr[c3][d3] = 255
     img1[c3][d3][0] = 10
     img1[c3][d3][1] = 10
     img1[c3][d3][2] = 255
-    cv2.imshow('tree', img1.astype(np.uint8))
+    cv2.imshow('tree', img1.astype(np.uint8)) #displays the path continuously
     cv2.waitKey(10)
+#retrac function retraces the shortest path
 def retrac(c2,d2,p2):
     global c
     global d
@@ -200,9 +217,9 @@ def retrac(c2,d2,p2):
 
 while p>1:
     retrac(c,d,p)
-    p=p-1
-print("Distance = " , path1[c1][d1])
-end = time.time()
-print(end-begin)
+    p=p-1 #when step number 1 is reached, we get the entire shortest path
+print("Distance = " , path1[c1][d1]) #distance of the shortest path
+end = time.time() #end time
+print(end-begin) #total time taken
 cv2.waitKey(0)
 cv2.destroyAllWindows()
