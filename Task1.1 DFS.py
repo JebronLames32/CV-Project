@@ -96,4 +96,4 @@ def dfs(i,j):
 begin=time.time()                               #time shown includes the time delay we have used to show the traversal of pixels
 dfs(m,n)
 
-cv2.destroyAllWindows
+cv2.destroyAllWindows()
