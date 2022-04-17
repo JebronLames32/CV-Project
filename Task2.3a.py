@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-f=open('directionOutputs1.txt', 'w')
+f=open('directionOutputsBonus.txt', 'w')
 def matchimage(frame1):
     for i in range(1,16):
         img = cv2.imread((str(i) + '.jpeg'), 0)
