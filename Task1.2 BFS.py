@@ -4,7 +4,7 @@ import time
 
 #MAP TRAVERSAL USING BFS ALGORITHM
 begin = time.time() #start time
-img=cv2.imread('Map Task-1 Part-2.png',0) #storing the given map
+img=cv2.imread('map1.2.png',0) #storing the given map
 b=880
 a=145
 d=359
