@@ -6,7 +6,7 @@ import time
 arduino = serial.Serial(port='COM4' , baudrate = 9600 , timeout = .1)
 #Arduino and Python is connected by Serial Communication
 
-f = open('directionOutputsBonus.txt', 'w') #a new text file is created and opened to store the outputs in tne text file
+f = open('directionOutputsBonus.txt', 'W+') #a new text file is created and opened to store the outputs in tne text file
 
 def write_read(x):
     arduino.write(bytes(x, 'utf-8')) #x is passed to the arduino after converting to bytes(of utf-8 encoding)
