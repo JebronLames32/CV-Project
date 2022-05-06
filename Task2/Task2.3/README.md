@@ -1,4 +1,4 @@
-Bonus Part - TASK 2.3:
+# Bonus Part - TASK 2.3:
 
 TASK 2.3a :
 1. Using the 15 different images at random, a video  of about 1.5 minutes is generated and simultaneously based on different road signals, different outputs are stored in a text file, ‘directionOutputsBonus.txt’ .
