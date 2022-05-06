@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-video = cv2.VideoWriter('video1new1.mp4', fourcc, 1, (600, 600))
+video = cv2.VideoWriter('video1new.mp4', fourcc, 1, (600, 600))
 #A video(mp4 format) is to be generated using 15 images at random for 90 times
 
 for j in range(90):
